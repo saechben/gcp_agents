@@ -1,0 +1,27 @@
+[tool.poetry]
+name = "gcp-agents"
+version = "0.1.0"
+description = ""
+authors = ["Benjamin <benjamin-sae-chew@hotmail.de>"]
+readme = "README.md"
+packages = [
+    { include = "agents" },
+    { include = "shared" },
+]
+
+[tool.poetry.dependencies]
+python = "^3.13"
+fastapi = "^0.119.0"
+openai = "^2.6.1"
+pydantic = "^2.12.2"
+pydantic-ai = "^1.6.0"
+python-dotenv = "^1.0.1"
+uvicorn = { extras = ["standard"], version = "^0.30.0" }
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^8.4.2"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
