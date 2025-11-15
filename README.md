@@ -1,18 +1,18 @@
-# GCP Agents Monorepo
+# Survey Follow-up Agent
 
-Backend-focused monorepo that houses reusable infrastructure plus individual AI agents. The current repository contains a survey follow-up recommendation agent and the shared utilities required to run it.
+Backend service that exposes a single follow-up recommendation agent plus the shared utilities required to run it.
 
 ## Repository layout
 
 ```
 .
-├─ agents/                # Individual agents live here
-│  └─ survey/
-│     ├─ api/             # FastAPI entrypoint and request/response schemas
-│     └─ core/            # Follow-up decision agent (Pydantic AI)
+├─ followup/              # Survey follow-up agent package
+│  ├─ api/                # FastAPI entrypoint and request/response schemas
+│  └─ core/               # Follow-up decision agent (Pydantic AI)
 ├─ shared/                # Common config plus optional speech helpers
 ├─ docs/                  # Architecture diagrams retained from the original UI
 ├─ tests/                 # API and service tests
+├─ Dockerfile             # Container image for the follow-up agent
 └─ pyproject.toml
 ```
 
@@ -34,11 +34,16 @@ All Streamlit/UI code from the original project has been removed so that only th
    Alternatively, set `LLM_PROVIDER_SPEC` directly (e.g. `google:gemini-1.5-flash`) if you need advanced routing.
 3. **Run the survey agent API**
    ```bash
-   poetry run uvicorn agents.survey.api.main:app --reload --host=0.0.0.0 --port=8000
+   poetry run uvicorn followup.api.main:app --reload --host=0.0.0.0 --port=8000
    ```
    The API now exposes:
    - `GET /health` – readiness probe
    - `POST /surveys/followups/decide` – invoke the follow-up agent which returns `{"should_ask": bool, "follow_up_question": str}`
+
+Build an image for deployment (used by Cloud Build/Run):
+```bash
+docker build -t survey-agent .
+```
 
 ## Tests
 
@@ -48,8 +53,4 @@ poetry run pytest
 
 The suite covers the speech helper plus a FastAPI smoke test that validates the follow-up agent endpoint.
 
-## Adding future agents
-
-1. Create a new subdirectory under `agents/` with the same `api/` and `core/` layout.
-2. Reuse anything needed from the `shared/` package (configuration, LLM wrapper, speech helper, etc.).
-3. Document the new agent in `agents/README.md` and expose its entrypoint via FastAPI or whichever framework is standardised here.
+This repository is dedicated solely to the follow-up agent. Additional agents should live in their own repositories to keep build and deployment pipelines isolated.

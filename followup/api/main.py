@@ -3,8 +3,8 @@ from __future__ import annotations
 import logging
 from fastapi import Depends, FastAPI, HTTPException, status
 
-from agents.survey.api.schemas import FollowUpRequest, HealthResponse
-from agents.survey.core import FollowUpAgent, FollowUpRecommendation
+from followup.api.schemas import FollowUpRequest, HealthResponse
+from followup.core import FollowUpAgent, FollowUpRecommendation
 
 logger = logging.getLogger(__name__)
 

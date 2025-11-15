@@ -1,4 +1,4 @@
-"""HTTP API for the survey agent."""
+"""HTTP API for the follow-up agent."""
 
 from .main import app
 

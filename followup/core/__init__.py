@@ -1,4 +1,4 @@
-"""Survey agent core package."""
+"""Follow-up agent core package."""
 
 from .followups import FollowUpAgent, FollowUpRecommendation
 

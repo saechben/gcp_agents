@@ -5,8 +5,8 @@ from typing import Iterator
 import pytest
 from fastapi.testclient import TestClient
 
-from agents.survey.api.main import app, get_follow_up_agent
-from agents.survey.core import FollowUpRecommendation
+from followup.api.main import app, get_follow_up_agent
+from followup.core import FollowUpRecommendation
 
 
 class _DummyFollowUpAgent:
